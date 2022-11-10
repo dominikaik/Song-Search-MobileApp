@@ -1,57 +1,88 @@
-import {TextInput, Button, Box, Text} from '@react-native-material/core';
-import { useState } from 'react';
-import DropDown from 'react-native-paper-dropdown'
-
-const FrontPage = () => {
-    const [showDropDown, setShowDropDown] = useState(false);
-    const [sort, setSort] = useState<string>("");
-
-    const sortingList = [
-        {
-            label: "Year",
-            value: "year",
-        },
-        {
-            label: "Danceability",
-            value: "danceability",
-        },
-        {
-            label: "Popularity",
-            value: "popularity",
-        },
-        {
-            label: "Duration",
-            value:"duration",
-        },
+import {Appbar, MD3DarkTheme, DefaultTheme, Provider, Surface } from "react-native-paper";
+  import React, { useState } from "react";
+  import { SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
+  import DropDown from "react-native-paper-dropdown";
+  import {TextInput, Button, Text} from "@react-native-material/core";
+  
+  function FrontPage() {
+    const [showSortDropDown, setShowSortDropDown] = useState(false);
+    const [sort, setSorting] = useState<string>("");
+    const [showOrderDropDown, setShowOrderDropDown] = useState(false);
+    const [order, setOrder] = useState<string>("");
+    const sortList = [
+      {
+        label: "Year",
+        value: "year",
+      },
+      {
+        label: "Danceability",
+        value: "danceability",
+      },
+      {
+        label: "Popularity",
+        value: "popularity",
+      },
+      {
+        label: "Duration",
+        value: "duration",
+      },
     ];
-
+    const orderList = [
+      {
+        label: "↑ Ascending",
+        value: "asc",
+      },
+      {
+        label: "↓ Descending",
+        value: "desc",
+      },
+    ];
+  
     return (
-        <>
-            <Text variant="h4">Spotify explorer</Text>
-            <Text variant="h5">Browse through over 169 thousand songs from spotify between 1921 and 2020, and rate your favorites</Text>
-            <Box mt={ "20px"} mb={"10px"}>
-            <TextInput
-                placeholder="Search..."
-                />              
-            <Button  variant="contained" margin-left={"10px"} title="Search"/>
-            </Box>
-            <Box>
-            
-                <DropDown 
-                    label={"Sort by"}
-                    mode={"outlined"}
-                    visible={showDropDown}
-                    showDropDown={() => setShowDropDown(true)}
-                    onDismiss={() => setShowDropDown(false)}
-                    value={sort}
-                    setValue={setSort}
-                    list={sortingList}
-                />
-        </Box>
-
-        </>
-      )
+        <View>
+            <Surface style={styles.containerStyle}>
+                <SafeAreaView style={styles.safeContainerStyle}>
+                    <TextInput variant="outlined" placeholder="Search..."/>
+                    <Button variant="contained" title="Search" />
+                    <DropDown
+                        label={"Sort by"}
+                        mode={"outlined"}
+                        visible={showSortDropDown}
+                        showDropDown={() => setShowSortDropDown(true)}
+                        onDismiss={() => setShowSortDropDown(false)}
+                        value={sort}
+                        setValue={setSorting}
+                        list={sortList}
+                    />
+                    <View style={styles.spacerStyle} />
+                    <DropDown
+                        label={"Order by"}
+                        mode={"outlined"}
+                        visible={showOrderDropDown}
+                        showDropDown={() => setShowOrderDropDown(true)}
+                        onDismiss={() => setShowOrderDropDown(false)}
+                        value={order}
+                        setValue={setOrder}
+                        list={orderList}
+                    />
+                </SafeAreaView>
+            </Surface>
+        </View>
+        );
     }
     
+    const styles = StyleSheet.create({
+        containerStyle: {
+        flex: 1,
+        },
+        spacerStyle: {
+        marginBottom: 15,
+        },
+        safeContainerStyle: {
+        flex: 1,
+        margin: 20,
+        justifyContent: "center",
+        },
+    });
+
   export default FrontPage;
-  
