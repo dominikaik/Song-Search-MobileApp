@@ -1,8 +1,9 @@
 import { AppRegistry } from 'react-native';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import {SongList} from "./components/SongList" 
 
 const client = new ApolloClient({
-  uri: 'localhost:4000/graphql',
+  uri: 'localhost:4000/graphql', //end-point that we are making queries to  
   cache: new InMemoryCache()
 });
 
@@ -10,12 +11,12 @@ const client = new ApolloClient({
 export default function App() {
   return (
       <ApolloProvider client={client}>
-        {/* Add root component  */}
+        <SongList/> 
       </ApolloProvider>
     );
   }
     
-AppRegistry.registerComponent('MyApplication', () => App);
+AppRegistry.registerComponent('Spotify Explorer', () => App);
 
 // const styles = StyleSheet.create({
 //   container: {
