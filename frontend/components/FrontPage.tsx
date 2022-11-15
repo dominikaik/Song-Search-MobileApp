@@ -1,8 +1,8 @@
-import {Appbar, MD3DarkTheme, DefaultTheme, Provider, Surface } from "react-native-paper";
+import {Surface } from "react-native-paper";
   import React, { useState } from "react";
-  import { SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
+  import { SafeAreaView, StyleSheet, View } from "react-native";
   import DropDown from "react-native-paper-dropdown";
-  import {TextInput, Button, Text} from "@react-native-material/core";
+  import {TextInput, Button} from "@react-native-material/core";
   
   function FrontPage() {
     const [showSortDropDown, setShowSortDropDown] = useState(false);
@@ -39,50 +39,51 @@ import {Appbar, MD3DarkTheme, DefaultTheme, Provider, Surface } from "react-nati
     ];
   
     return (
-        <View>
-            <Surface style={styles.containerStyle}>
-                <SafeAreaView style={styles.safeContainerStyle}>
-                    <TextInput variant="outlined" placeholder="Search..."/>
-                    <Button variant="contained" title="Search" />
-                    <DropDown
-                        label={"Sort by"}
-                        mode={"outlined"}
-                        visible={showSortDropDown}
-                        showDropDown={() => setShowSortDropDown(true)}
-                        onDismiss={() => setShowSortDropDown(false)}
-                        value={sort}
-                        setValue={setSorting}
-                        list={sortList}
-                    />
-                    <View style={styles.spacerStyle} />
-                    <DropDown
-                        label={"Order by"}
-                        mode={"outlined"}
-                        visible={showOrderDropDown}
-                        showDropDown={() => setShowOrderDropDown(true)}
-                        onDismiss={() => setShowOrderDropDown(false)}
-                        value={order}
-                        setValue={setOrder}
-                        list={orderList}
-                    />
-                </SafeAreaView>
-            </Surface>
-        </View>
-        );
-    }
+      <Surface style={styles.containerStyle}>
+        <SafeAreaView style={styles.safeContainerStyle}>
+          <TextInput variant="outlined" placeholder="Search..."/>
+          <Button style={styles.button} variant="contained" title="Search" />
+          <DropDown
+            label={"Sort by"}
+            mode={"outlined"}
+            visible={showSortDropDown}
+            showDropDown={() => setShowSortDropDown(true)}
+            onDismiss={() => setShowSortDropDown(false)}
+            value={sort}
+            setValue={setSorting}
+            list={sortList}
+          />
+          <View style={styles.spacerStyle} />
+            <DropDown
+              label={"Order by"}
+              mode={"outlined"}
+              visible={showOrderDropDown}
+              showDropDown={() => setShowOrderDropDown(true)}
+              onDismiss={() => setShowOrderDropDown(false)}
+              value={order}
+              setValue={setOrder}
+              list={orderList}
+            />
+        </SafeAreaView>
+      </Surface>
+    );
+  }
     
-    const styles = StyleSheet.create({
-        containerStyle: {
-        flex: 1,
-        },
-        spacerStyle: {
-        marginBottom: 15,
-        },
-        safeContainerStyle: {
-        flex: 1,
-        margin: 20,
-        justifyContent: "center",
-        },
-    });
+  const styles = StyleSheet.create({
+    containerStyle: {
+      flex: 1, 
+    },
+    spacerStyle: {
+      marginBottom: 15,
+    },
+    safeContainerStyle: {
+      flex: 1,
+      margin: 20,
+      justifyContent: "center",
+    },
+    button: {
+      backgroundColor: "#52796F"
+    }
+  });
 
   export default FrontPage;
