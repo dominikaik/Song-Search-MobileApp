@@ -3,7 +3,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import {SongList} from "./components/SongList" 
 
 const client = new ApolloClient({
-  uri: 'localhost:4000/graphql', //end-point that we are making queries to  
+  uri: 'http://it2810-67.idi.ntnu.no:4000/graphql', //end-point that we are making queries to  
   cache: new InMemoryCache()
 });
 
