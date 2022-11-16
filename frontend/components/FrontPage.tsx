@@ -8,70 +8,29 @@ import { openSongTab, songCurrentPage, songQueryVars, songTotalPages } from '../
 import { useReactiveVar } from '@apollo/client';
   
 function FrontPage() {
-  const [showSortDropDown, setShowSortDropDown] = useState(false);
-  const [sortlist, setSorting] = useState<string>("");
-  const [showOrderDropDown, setShowOrderDropDown] = useState(false);
-  const [order, setOrder] = useState<string>("");
   const [search, setSearch] = useState<string>("");
-  const [visible, setVisible] = React.useState(false);
+  const [sortVisible, setSortVisible] = React.useState(false);
+  const [orderVisible, setOrderVisible] = React.useState(false);
   const [sort, setSort] = useState<SortTypes>(SortTypes.desc);
   const [sortBy, setSortBy] = useState<SortBy>(SortBy.year)
   const page = useReactiveVar(songCurrentPage);
   const totalPages = useReactiveVar(songTotalPages);
   const inputs = useReactiveVar(songQueryVars);
 
-
-  const openMenu = () => setVisible(true);
-
-  const closeMenu = () => setVisible(false);
-    const sortList = [
-      {
-        label: "Year",
-        value: "year",
-      },
-      {
-        label: "Danceability",
-        value: "danceability",
-      },
-      {
-        label: "Popularity",
-        value: "popularity",
-      },
-      {
-        label: "Duration",
-        value: "duration",
-      },
-    ];
-    const orderList = [
-      {
-        label: "↑ Ascending",
-        value: "asc",
-      },
-      {
-        label: "↓ Descending",
-        value: "desc",
-      },
-    ];
+  const openSortMenu = () => setSortVisible(true);
+  const closeSortMenu = () => setSortVisible(false);
+  const openOrderMenu = () => setOrderVisible(true);
+  const closeOrderMenu = () => setOrderVisible(false);
 
     const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
       songQueryVars({...inputs, page: value})
-      // Close open info on page change
       openSongTab(-1)
     };
   
     useEffect(() => {
-      //Using reactive variables in apollo to refetch with new queries if sort order or parameter is changed.
       songQueryVars({...inputs, page: 1, orderBy: {[sortBy]: sort}})
-      // Close open info when filtering
       openSongTab(-1)
-      // Eslint thinks useEffect should re-render when reactive variable changes.
-      // This will cause a loop/wrong behavior, we therefore remove this rule.
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sort, sortBy])
-  
-    useEffect(() => {
-      document.title = 'Spotify explorer'
-    }, [])
   
   
     return (
@@ -81,9 +40,9 @@ function FrontPage() {
           <TextInput variant="outlined" placeholder="Search..." />
           <Button style={styles.button} onPress={() => {songQueryVars({search: search, page: 1}); openSongTab(-1)}}>Search</Button>
           <Menu
-            visible={visible}
-            onDismiss={closeMenu}
-            anchor={<Button onPress={openMenu}>Sort by</Button>}>
+            visible={sortVisible}
+            onDismiss={closeSortMenu}
+            anchor={<Button onPress={openSortMenu}>Sort by</Button>}>
           <Menu.Item onPress={() => setSortBy(SortBy.year)} title="Year" />
           <Menu.Item onPress={() => setSortBy(SortBy.danceability)} title="Danceability" />
           <Divider />
@@ -92,22 +51,24 @@ function FrontPage() {
         </Menu>
           <View style={styles.spacerStyle} />
           <Menu
-            visible={visible}
-            onDismiss={closeMenu}
-            anchor={<Button onPress={openMenu}>Order by</Button>}>
+            visible={orderVisible}
+            onDismiss={closeOrderMenu}
+            anchor={<Button onPress={openOrderMenu}>Order by</Button>}>
           <Menu.Item onPress={() => setSort(SortTypes.asc)} title="↑ Ascending" />
           <Menu.Item onPress={() => setSort(SortTypes.desc)} title="↓ Descending" />
         </Menu>
           <SongList/>
-        </SafeAreaView>
-      </Surface>
-      <DataTable>
+
+          <DataTable>
       <DataTable.Pagination
             page={page}
             numberOfPages={totalPages}
             onPageChange={() => handlePageChange}
           />
        </DataTable>
+        </SafeAreaView>
+      </Surface>
+      
       </>
     );
   }
