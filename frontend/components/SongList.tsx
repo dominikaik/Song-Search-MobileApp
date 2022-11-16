@@ -8,7 +8,6 @@ import { Text, View } from "react-native";
 import { DataTable} from 'react-native-paper';
 import { Collapse, CollapseHeader, CollapseBody} from 'accordion-collapse-react-native';
 import { Chip, VStack, HStack, IconButton } from "@react-native-material/core"; 
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Rating } from '@rneui/themed';
 
 export function SongList() {
@@ -31,55 +30,38 @@ export function SongList() {
     }, [data])
 
   if (loading) return <Text> Loading ...</Text>;
-  if (error || !data) return <><View style={{ minHeight: '80vh' }} ><Text>Something went wrong :/<br/>Is the backend server running?</Text></View></>;
+  if (error || !data) return <><View ><Text>Something went wrong :/<br/>Is the backend server running?</Text></View></>;
 
   return (
-    <View 
-    style={{
-      flexDirection: "column", 
-      alignItems: "center", 
-      alignContent: "center"
-    }}
-    >
+    <View >
     <DataTable>
       <DataTable.Header>
         <DataTable.Row key={"song-table"}>
           <DataTable.Cell> </DataTable.Cell>
           <DataTable.Cell key={"name"}> Name </DataTable.Cell>
-          <DataTable.Cell key={"main-artist"}> Main Artist </DataTable.Cell>
+          <DataTable.Cell key={"main-artist"}> Main Artist </DataTable.Cell> 
           <DataTable.Cell key={"year"}> Year </DataTable.Cell>
         </DataTable.Row>
       </DataTable.Header>
-      
       <DataTable>
-        
-            {data.getSongs.songs.map(((song, index: number) => (
-              <>
-              <Collapse>
+        {data.getSongs.songs.map(((song) => (
+        <>
+        <Collapse>
           <CollapseHeader>
               <DataTable.Row key={song._id}>
                 {/* Inspiration from this video: https://www.youtube.com/watch?v=3v2cxwvWh80&t=688s */}
                 <DataTable.Cell>
-                  <IconButton
-                    onPress={() => openSongTab(open === index ? -1 : index)} //Opens song tab if closed, closes the previous tab if new one is clicked
-                  >
-                    {open === index ? (
-                         <IconButton icon={props => <Icon name="wifi" {...props} />} />
-                    ) : (
-                      <IconButton icon={props => <Icon name="wifi" {...props} />} />
-                    )}
-                  </IconButton>
                 </DataTable.Cell>
                 <DataTable.Cell>{song.name}</DataTable.Cell>
                 <DataTable.Cell>{song.artists[0]}</DataTable.Cell>
                 <DataTable.Cell>{song.year}</DataTable.Cell>
               </DataTable.Row>
-              </CollapseHeader>
-              <CollapseBody>
+            </CollapseHeader>
+            <CollapseBody>
               <DataTable.Row>
                 <DataTable.Cell>
                   
-                    <View style={{width: "auto", display: "flex", flexWrap: 'wrap', flexDirection: 'column'}}> 
+                    <View > 
                     
                     <Chip label="Info" color="primary"/>
                     <HStack mt={2}>
@@ -91,8 +73,8 @@ export function SongList() {
 
                     <Chip label="Artists" color="primary"/>
                     <HStack mt={2}>
-                    {song.artists.map((artist: string, i:number) => (
-                      <Chip key={i} label={artist} variant="outlined"/>
+                      {song.artists.map((artist: string, i:number) => (
+                        <Chip key={i} label={artist} variant="outlined"/>
                       ))}
                     </HStack>
                 
@@ -105,14 +87,12 @@ export function SongList() {
                     </VStack>
                     </View>
                 </DataTable.Cell>
-                </DataTable.Row>
-                </CollapseBody>
-                </Collapse>
-                </>
-            )))}
-            
+              </DataTable.Row>
+            </CollapseBody>
+        </Collapse>
+        </>
+        )))}
       </DataTable>
-
     </DataTable>
   </View>
   )
