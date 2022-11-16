@@ -60,12 +60,16 @@ function FrontPage() {
           <SongList/>
 
           <DataTable>
-      <DataTable.Pagination
+      <DataTable.Pagination 
             page={page}
             numberOfPages={totalPages}
             onPageChange={handlePageChange}
-            label={`${page} of ${totalPages}`}
+            showFastPaginationControls
+            style={{justifyContent: "center"}}
           />
+        <View style={styles.pagestyle}>
+        Page {`${page} of ${totalPages}`}
+        </View>
        </DataTable>
         </SafeAreaView>
       </Surface>
@@ -87,6 +91,13 @@ function FrontPage() {
     },
     button: {
       backgroundColor: "#52796F"
+    }, 
+    pagestyle: {
+      justifyContent: "center",
+      alignSelf: "center",  
+      marginBottom: 1, 
+      fontFamily: "Arial", 
+      fontSize: 13
     }
   });
 
