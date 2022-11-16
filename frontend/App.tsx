@@ -1,6 +1,9 @@
+import { AppRegistry } from 'react-native';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import {SongList} from "./components/SongList" 
 import { StyleSheet, View, StatusBar} from 'react-native';
 import FrontPage from './components/FrontPage';
-import {Appbar, MD3DarkTheme, DefaultTheme, Provider, MD3LightTheme} from "react-native-paper";
+import {Appbar, DarkTheme, DefaultTheme, Provider, MD3LightTheme} from "react-native-paper";
 import { useState } from 'react';
 
 const theme = {
@@ -14,13 +17,19 @@ const theme = {
   },
 };
 
+const client = new ApolloClient({
+  uri: 'http://it2810-67.idi.ntnu.no:4000/graphql', //end-point that we are making queries to  
+  cache: new InMemoryCache()
+});
+
 export default function App() {
   const [nightMode, setNightmode] = useState(false);
   return (
-      <Provider theme={nightMode ? MD3DarkTheme : DefaultTheme}>
+    <ApolloProvider client={client}>
+      <Provider theme={nightMode ? DarkTheme : DefaultTheme}>
         <StatusBar
           backgroundColor={
-            nightMode ? MD3DarkTheme.colors.surface : DefaultTheme.colors.primary
+            nightMode ? DarkTheme.colors.surface : DefaultTheme.colors.primary
           }
           barStyle={"light-content"}
         />
@@ -33,8 +42,10 @@ export default function App() {
         </Appbar.Header>
         <FrontPage />
       </Provider>
-
+    </ApolloProvider>
   );
+  AppRegistry.registerComponent('Spotify Explorer', () => App);
 }
+
 
 

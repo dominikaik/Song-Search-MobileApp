@@ -1,8 +1,9 @@
 import {Surface } from "react-native-paper";
-  import React, { useState } from "react";
-  import { SafeAreaView, StyleSheet, View } from "react-native";
-  import DropDown from "react-native-paper-dropdown";
-  import {TextInput, Button} from "@react-native-material/core";
+import React, { useState } from "react";
+import { SafeAreaView, StyleSheet, View } from "react-native";
+import DropDown from "react-native-paper-dropdown";
+import {TextInput, Button} from "@react-native-material/core";
+import { SongList } from "./SongList";
   
   function FrontPage() {
     const [showSortDropDown, setShowSortDropDown] = useState(false);
@@ -64,6 +65,7 @@ import {Surface } from "react-native-paper";
               setValue={setOrder}
               list={orderList}
             />
+            <SongList/>
         </SafeAreaView>
       </Surface>
     );
