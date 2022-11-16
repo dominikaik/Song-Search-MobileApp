@@ -22,7 +22,7 @@ function FrontPage() {
   const openOrderMenu = () => setOrderVisible(true);
   const closeOrderMenu = () => setOrderVisible(false);
 
-    const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    const handlePageChange = (value: number) => {
       songQueryVars({...inputs, page: value})
       openSongTab(-1)
     };
@@ -63,12 +63,12 @@ function FrontPage() {
       <DataTable.Pagination
             page={page}
             numberOfPages={totalPages}
-            onPageChange={() => handlePageChange}
+            onPageChange={handlePageChange}
+            label={`${page} of ${totalPages}`}
           />
        </DataTable>
         </SafeAreaView>
       </Surface>
-      
       </>
     );
   }
