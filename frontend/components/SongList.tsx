@@ -7,7 +7,7 @@ import { openSongTab, songCurrentPage, songQueryVars, songTotalPages } from '../
 import { Text, View } from "react-native";
 import { DataTable} from 'react-native-paper';
 import { Collapse, CollapseHeader, CollapseBody} from 'accordion-collapse-react-native';
-import { Chip, VStack, HStack, IconButton } from "@react-native-material/core"; 
+import { Chip, VStack, HStack } from "@react-native-material/core"; 
 import { Rating } from '@rneui/themed';
 
 export function SongList() {
@@ -33,7 +33,7 @@ export function SongList() {
   if (error || !data) return <><View ><Text>Something went wrong :/<br/>Is the backend server running?</Text></View></>;
 
   return (
-    <View >
+    <View>
     <DataTable>
       <DataTable.Header>
         <DataTable.Row key={"song-table"}>
@@ -49,7 +49,6 @@ export function SongList() {
         <Collapse>
           <CollapseHeader>
               <DataTable.Row key={song._id}>
-                {/* Inspiration from this video: https://www.youtube.com/watch?v=3v2cxwvWh80&t=688s */}
                 <DataTable.Cell>
                 </DataTable.Cell>
                 <DataTable.Cell>{song.name}</DataTable.Cell>
@@ -58,11 +57,9 @@ export function SongList() {
               </DataTable.Row>
             </CollapseHeader>
             <CollapseBody>
+            <View>
               <DataTable.Row>
                 <DataTable.Cell>
-                  
-                    <View > 
-                    
                     <Chip label="Info" color="primary"/>
                     <HStack mt={2}>
                     <Chip label={"Danceability: "+ (song.danceability * 100).toFixed()+"%"} variant="outlined" />
@@ -85,15 +82,16 @@ export function SongList() {
                         type="song.rating"
                         onStartRating={(newValue: number) => {rateSong({variables: {id: song._id, rating: newValue}})}}/>
                     </VStack>
-                    </View>
                 </DataTable.Cell>
+                
               </DataTable.Row>
+              </View>
             </CollapseBody>
-        </Collapse>
-        </>
-        )))}
+          </Collapse>
+          </>
+          )))}
+        </DataTable>
       </DataTable>
-    </DataTable>
-  </View>
-  )
-}
+    </View>
+    );
+  }
