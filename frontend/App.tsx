@@ -1,16 +1,15 @@
-import { AppRegistry } from 'react-native';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import { StyleSheet, View, StatusBar} from 'react-native';
+import {StatusBar} from 'react-native';
 import FrontPage from './components/FrontPage';
-import {Appbar, MD3DarkTheme, DefaultTheme, Provider, MD3LightTheme, ThemeProvider} from "react-native-paper";
+import {Appbar, MD3DarkTheme, Provider, MD3LightTheme, ThemeProvider} from "react-native-paper";
 import { useState } from 'react';
 
 const theme = {
-  ...MD3LightTheme, // or MD3DarkTheme
+  ...MD3DarkTheme,
   roundness: 2,
   colors: {
-    ...MD3LightTheme.colors,
-    primary: '#3498db',
+    ...MD3DarkTheme.colors,
+    primary: '#f7f3f9',
     secondary: '#f1c40f',
     tertiary: '#a1b2c3',
   },
@@ -22,21 +21,21 @@ const client = new ApolloClient({
 });
 
 export default function App() {
-  const [nightMode, setNightmode] = useState(false);
+  const [lightMode, setLightmode] = useState(false);
   return (
       <ApolloProvider client={client}>
-        <Provider theme={nightMode ? MD3DarkTheme : DefaultTheme}>
+        <Provider theme={lightMode ? MD3LightTheme : MD3DarkTheme}>
           <StatusBar
               backgroundColor={
-                nightMode ? MD3DarkTheme.colors.surface : DefaultTheme.colors.primary
+                lightMode ? MD3LightTheme.colors.surface : MD3DarkTheme.colors.primary
               }
-              barStyle={"light-content"}
+              barStyle={"dark-content"}
             />
             <Appbar.Header>
               <Appbar.Content title="Spotify explorer" />
               <Appbar.Action
-                icon={nightMode ? "brightness-7" : "brightness-3"}
-                onPress={() => setNightmode(!nightMode)}
+                icon={lightMode ? "brightness-3" : "brightness-7"}
+                onPress={() => setLightmode(!lightMode)}
             />
             </Appbar.Header>
             <FrontPage/>

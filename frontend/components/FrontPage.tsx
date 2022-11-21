@@ -5,12 +5,11 @@ import { SongList } from "./SongList";
 import { SortBy, SortTypes } from "../enums/order";
 import { openSongTab, songCurrentPage, songQueryVars, songTotalPages } from '../GraphQL/cache';
 import { useReactiveVar } from '@apollo/client';
-import { wrap } from "module";
   
 function FrontPage() {
   const [search, setSearch] = useState<string>("");
-  const [sortVisible, setSortVisible] = React.useState(false);
-  const [orderVisible, setOrderVisible] = React.useState(false);
+  const [sortVisible, setSortVisible] = useState(false);
+  const [orderVisible, setOrderVisible] = useState(false);
   const [sort, setSort] = useState<SortTypes>(SortTypes.desc);
   const [sortBy, setSortBy] = useState<SortBy>(SortBy.year)
   const page = useReactiveVar(songCurrentPage);
@@ -36,7 +35,7 @@ function FrontPage() {
     return (
       <>
       <Surface style={styles.containerStyle}>
-        <View style={styles.safeContainerStyle}>
+        <SafeAreaView style={styles.safeContainerStyle}>
           <TextInput placeholder="Search..." />
           <View style={styles.spacerStyle} />
           <Button style={styles.button} mode="contained" onPress={() => {songQueryVars({search: search, page: 1}); openSongTab(-1)}}>Search</Button>
@@ -70,7 +69,7 @@ function FrontPage() {
             onPageChange={() => handlePageChange}
           />
        </DataTable>
-        </View>
+        </SafeAreaView>
       </Surface>
       
       </>
@@ -97,7 +96,7 @@ function FrontPage() {
     },
     wrapSpacerStyle: {
       padding: 5,
-    }
+    },
   });
 
   export default FrontPage;
