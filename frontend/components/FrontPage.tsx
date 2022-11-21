@@ -22,7 +22,7 @@ function FrontPage() {
   const openOrderMenu = () => setOrderVisible(true);
   const closeOrderMenu = () => setOrderVisible(false);
 
-    const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    const handlePageChange = (value: number) => {
       songQueryVars({...inputs, page: value})
       openSongTab(-1)
     };
@@ -60,15 +60,19 @@ function FrontPage() {
           <SongList/>
 
           <DataTable>
-      <DataTable.Pagination
+      <DataTable.Pagination 
             page={page}
             numberOfPages={totalPages}
-            onPageChange={() => handlePageChange}
+            onPageChange={handlePageChange}
+            showFastPaginationControls
+            style={{justifyContent: "center"}}
           />
+        <View style={styles.pagestyle}>
+        Page {`${page} of ${totalPages}`}
+        </View>
        </DataTable>
         </SafeAreaView>
       </Surface>
-      
       </>
     );
   }
@@ -87,6 +91,13 @@ function FrontPage() {
     },
     button: {
       backgroundColor: "#52796F"
+    }, 
+    pagestyle: {
+      justifyContent: "center",
+      alignSelf: "center",  
+      marginBottom: 1, 
+      fontFamily: "Arial", 
+      fontSize: 13
     }
   });
 
