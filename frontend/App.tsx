@@ -5,12 +5,12 @@ import FrontPage from './components/FrontPage';
 import {Appbar, MD3DarkTheme, DefaultTheme, Provider, MD3LightTheme} from "react-native-paper";
 import { useState } from 'react';
 
-const theme = {
+export const theme = {
   ...MD3LightTheme, // or MD3DarkTheme
   roundness: 2,
   colors: {
     ...MD3LightTheme.colors,
-    primary: '#3498db',
+    primary: '#f7f3f9',
     secondary: '#f1c40f',
     tertiary: '#a1b2c3',
   },

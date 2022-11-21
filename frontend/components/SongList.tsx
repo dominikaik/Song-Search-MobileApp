@@ -7,8 +7,9 @@ import { openSongTab, songCurrentPage, songQueryVars, songTotalPages } from '../
 import { Text, View } from "react-native";
 import { DataTable} from 'react-native-paper';
 import { Collapse, CollapseHeader, CollapseBody} from 'accordion-collapse-react-native';
-import { Chip, VStack, HStack, IconButton } from "@react-native-material/core"; 
-import { Rating } from '@rneui/themed';
+import { Chip, VStack, HStack } from "@react-native-material/core"; 
+import { Rating } from "react-native-ratings"; 
+import { theme } from "../App"; 
 
 export function SongList() {
 
@@ -81,9 +82,14 @@ export function SongList() {
                     <VStack mt={2} spacing={2}>
                     <Text>Rate this song:</Text>
                     <Rating
-                        showRating
-                        type="song.rating"
-                        onStartRating={(newValue: number) => {rateSong({variables: {id: song._id, rating: newValue}})}}/>
+                        minValue={1}
+                        type="custom"
+                        ratingColor={theme.colors.secondary} 
+                        tintColor={theme.colors.primary}
+                        imageSize={35}
+                        showRating={true}
+                        ratingCount={5}
+                        onSwipeRating={(newValue: number) => {rateSong({ variables: { id: song._id, rating: newValue } });}}/>
                     </VStack>
                     </View>
                 </DataTable.Cell>

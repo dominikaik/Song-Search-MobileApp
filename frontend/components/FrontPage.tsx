@@ -1,4 +1,4 @@
-import {Surface, DataTable,  Button, Menu, Divider, Provider  } from "react-native-paper";
+import {Surface, DataTable,  Button, Menu, Divider, Provider, Text  } from "react-native-paper";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import {TextInput} from "@react-native-material/core";
@@ -71,7 +71,9 @@ function FrontPage() {
             style={{justifyContent: "center"}}
           />
         <View style={styles.pagestyle}>
-        Page {`${page} of ${totalPages}`}
+    <Text>
+      Page {`${page} of ${totalPages}`} 
+    </Text>
         </View>
        </DataTable>
         </SafeAreaView>
