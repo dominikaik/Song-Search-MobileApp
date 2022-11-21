@@ -17,7 +17,7 @@ export type songsType = {
         explicit: boolean,
         duration_ms: number,
         popularity: number,
-        rating: number | null
+        rating: number 
     }[],
     page: number,
     totalPages: number

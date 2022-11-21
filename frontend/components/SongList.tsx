@@ -82,14 +82,17 @@ export function SongList() {
                     <VStack mt={2} spacing={2}>
                     <Text>Rate this song:</Text>
                     <Rating
-                        minValue={1}
+                        key={song.rating}
+                        startingValue={song.rating}
+                        minValue={0}
                         type="custom"
                         ratingColor={theme.colors.secondary} 
                         tintColor={theme.colors.primary}
                         imageSize={35}
                         showRating={true}
                         ratingCount={5}
-                        onSwipeRating={(newValue: number) => {rateSong({ variables: { id: song._id, rating: newValue } });}}/>
+                        onFinishRating={(newValue: number) => {rateSong({ variables: { id: song._id, rating: newValue } });}}
+                        />
                     </VStack>
                     </View>
                 </DataTable.Cell>
