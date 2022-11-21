@@ -37,16 +37,18 @@ function FrontPage() {
       <>
       <Surface style={styles.containerStyle}>
         <SafeAreaView style={styles.safeContainerStyle}>
-          <TextInput variant="outlined" placeholder="Search..." />
+          <TextInput variant="outlined" placeholder="Search..." onChangeText={value => setSearch(value)} value={search}/>
           <Button style={styles.button} onPress={() => {songQueryVars({search: search, page: 1}); openSongTab(-1)}}>Search</Button>
           <Menu
             visible={sortVisible}
             onDismiss={closeSortMenu}
             anchor={<Button onPress={openSortMenu}>Sort by</Button>}>
           <Menu.Item onPress={() => setSortBy(SortBy.year)} title="Year" />
+          <Divider />
           <Menu.Item onPress={() => setSortBy(SortBy.danceability)} title="Danceability" />
           <Divider />
           <Menu.Item onPress={() => setSortBy(SortBy.popularity)} title="Popularity" />
+          <Divider />
           <Menu.Item onPress={() => setSortBy(SortBy.duration_ms)} title="Duration" />
         </Menu>
           <View style={styles.spacerStyle} />
@@ -55,6 +57,7 @@ function FrontPage() {
             onDismiss={closeOrderMenu}
             anchor={<Button onPress={openOrderMenu}>Order by</Button>}>
           <Menu.Item onPress={() => setSort(SortTypes.asc)} title="↑ Ascending" />
+          <Divider />
           <Menu.Item onPress={() => setSort(SortTypes.desc)} title="↓ Descending" />
         </Menu>
           <SongList/>
