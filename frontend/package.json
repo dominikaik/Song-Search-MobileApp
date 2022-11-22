@@ -25,6 +25,7 @@
     "react-native-pagination": "^1.5.5",
     "react-native-paper": "^5.0.0-rc.9",
     "react-native-paper-dropdown": "^1.0.7",
+    "react-native-ratings": "^8.1.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "~0.18.9"
   },

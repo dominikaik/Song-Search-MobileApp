@@ -1,7 +1,6 @@
-import {Surface, DataTable,  Button, Menu, Divider, Provider  } from "react-native-paper";
+import {Surface, DataTable,  Button, Menu, Divider, TextInput, Text } from "react-native-paper";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
-import {TextInput} from "@react-native-material/core";
 import { SongList } from "./SongList";
 import { SortBy, SortTypes } from "../enums/order";
 import { openSongTab, songCurrentPage, songQueryVars, songTotalPages } from '../GraphQL/cache';
@@ -9,8 +8,8 @@ import { useReactiveVar } from '@apollo/client';
   
 function FrontPage() {
   const [search, setSearch] = useState<string>("");
-  const [sortVisible, setSortVisible] = React.useState(false);
-  const [orderVisible, setOrderVisible] = React.useState(false);
+  const [sortVisible, setSortVisible] = useState(false);
+  const [orderVisible, setOrderVisible] = useState(false);
   const [sort, setSort] = useState<SortTypes>(SortTypes.desc);
   const [sortBy, setSortBy] = useState<SortBy>(SortBy.year)
   const page = useReactiveVar(songCurrentPage);
@@ -37,12 +36,15 @@ function FrontPage() {
       <>
       <Surface style={styles.containerStyle}>
         <SafeAreaView style={styles.safeContainerStyle}>
-          <TextInput variant="outlined" placeholder="Search..." onChangeText={value => setSearch(value)} value={search}/>
-          <Button style={styles.button} onPress={() => {songQueryVars({search: search, page: 1}); openSongTab(-1)}}>Search</Button>
+          <TextInput placeholder="Search..." onChangeText={value => setSearch(value)} value={search}/>
+          <View style={styles.spacerStyle} />
+          <Button style={styles.button} mode="contained" onPress={() => {songQueryVars({search: search, page: 1}); openSongTab(-1)}}>Search</Button>
+          <View style={styles.spacerStyle} />
+          <View style={styles.wrapSorting}>
           <Menu
             visible={sortVisible}
             onDismiss={closeSortMenu}
-            anchor={<Button onPress={openSortMenu}>Sort by</Button>}>
+            anchor={<Button style={styles.button} mode="outlined" onPress={openSortMenu}>Sort by</Button>}>
           <Menu.Item onPress={() => setSortBy(SortBy.year)} title="Year" />
           <Divider />
           <Menu.Item onPress={() => setSortBy(SortBy.danceability)} title="Danceability" />
@@ -51,17 +53,18 @@ function FrontPage() {
           <Divider />
           <Menu.Item onPress={() => setSortBy(SortBy.duration_ms)} title="Duration" />
         </Menu>
-          <View style={styles.spacerStyle} />
-          <Menu
+          <View style={styles.wrapSpacerStyle} />
+          <Menu 
             visible={orderVisible}
             onDismiss={closeOrderMenu}
-            anchor={<Button onPress={openOrderMenu}>Order by</Button>}>
+            anchor={<Button style={styles.button} mode="outlined" onPress={openOrderMenu}>Order by</Button>}>
           <Menu.Item onPress={() => setSort(SortTypes.asc)} title="↑ Ascending" />
           <Divider />
           <Menu.Item onPress={() => setSort(SortTypes.desc)} title="↓ Descending" />
         </Menu>
+        </View>
+        <View style={styles.spacerStyle} />
           <SongList/>
-
           <DataTable>
       <DataTable.Pagination 
             page={page}
@@ -71,7 +74,9 @@ function FrontPage() {
             style={{justifyContent: "center"}}
           />
         <View style={styles.pagestyle}>
-        Page {`${page} of ${totalPages}`}
+    <Text>
+      Page {`${page} of ${totalPages}`} 
+    </Text>
         </View>
        </DataTable>
         </SafeAreaView>
@@ -85,21 +90,26 @@ function FrontPage() {
       flex: 1, 
     },
     spacerStyle: {
-      marginBottom: 15,
+      marginBottom: 10,
     },
     safeContainerStyle: {
-      flex: 1,
-      margin: 20,
-      justifyContent: "center",
+      margin: 15,
+    },
+    wrapSorting: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+      justifyContent: "center"
     },
     button: {
-      backgroundColor: "#52796F"
-    }, 
+      borderRadius: 5
+    },
+     wrapSpacerStyle: {
+      padding: 5,
+    },
     pagestyle: {
       justifyContent: "center",
       alignSelf: "center",  
       marginBottom: 1, 
-      fontFamily: "Arial", 
       fontSize: 13
     }
   });

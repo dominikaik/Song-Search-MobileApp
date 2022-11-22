@@ -3,17 +3,14 @@ import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { GET_SONGS } from "../GraphQL/queries";
 import { RATE_SONG } from "../GraphQL/mutations";
 import { getSongsInputs, songsDataType } from "../types/songData";
-import { openSongTab, songCurrentPage, songQueryVars, songTotalPages } from '../GraphQL/cache';
-import { Text, View } from "react-native";
-import { DataTable} from 'react-native-paper';
+import { songCurrentPage, songQueryVars, songTotalPages } from '../GraphQL/cache';
+import { View, StyleSheet } from "react-native";
+import { DataTable, Text, Chip} from 'react-native-paper';
 import { Collapse, CollapseHeader, CollapseBody} from 'accordion-collapse-react-native';
-import { Chip, VStack, HStack, IconButton } from "@react-native-material/core"; 
-import { Rating } from '@rneui/themed';
+import { AirbnbRating } from "react-native-ratings"; 
 
 export function SongList() {
-
     const songVars = useReactiveVar(songQueryVars);
-    const open = useReactiveVar(openSongTab);
 
     // Prepare mutation and query, and do the initial fetch.
     const { loading, error, data } = useQuery<songsDataType, getSongsInputs>(GET_SONGS, {
@@ -36,64 +33,75 @@ export function SongList() {
     <View >
     <DataTable>
       <DataTable.Header>
-        <DataTable.Row key={"song-table"}>
-          <DataTable.Cell> </DataTable.Cell>
-          <DataTable.Cell key={"name"}> Name </DataTable.Cell>
-          <DataTable.Cell key={"main-artist"}> Main Artist </DataTable.Cell> 
-          <DataTable.Cell key={"year"}> Year </DataTable.Cell>
-        </DataTable.Row>
+          <DataTable.Title style={songStyles.nameCellStyle}> Name </DataTable.Title>
+          <DataTable.Title style={songStyles.artistCellStyle}> Main Artist </DataTable.Title> 
+          <DataTable.Title style={songStyles.yearCellStyle}> Year </DataTable.Title>
       </DataTable.Header>
-      <DataTable>
         {data.getSongs.songs.map(((song) => (
-        <>
         <Collapse>
           <CollapseHeader>
-              <DataTable.Row key={song._id}>
-                {/* Inspiration from this video: https://www.youtube.com/watch?v=3v2cxwvWh80&t=688s */}
-                <DataTable.Cell>
-                </DataTable.Cell>
-                <DataTable.Cell>{song.name}</DataTable.Cell>
-                <DataTable.Cell>{song.artists[0]}</DataTable.Cell>
-                <DataTable.Cell>{song.year}</DataTable.Cell>
+              <DataTable.Row>
+                <DataTable.Cell style={songStyles.nameCellStyle}>{song.name}</DataTable.Cell>
+                <DataTable.Cell style={songStyles.artistCellStyle}>{song.artists[0]}</DataTable.Cell>
+                <DataTable.Cell style={songStyles.yearCellStyle}>{song.year}</DataTable.Cell>
               </DataTable.Row>
             </CollapseHeader>
-            <CollapseBody>
-              <DataTable.Row>
-                <DataTable.Cell>
-                  
-                    <View > 
-                    
-                    <Chip label="Info" color="primary"/>
-                    <HStack mt={2}>
-                    <Chip label={"Danceability: "+ (song.danceability * 100).toFixed()+"%"} variant="outlined" />
-                    <Chip label={"Popularity: "+ song.popularity + " / 100"} variant="outlined" />
-                    <Chip label={Math.floor(song.duration_ms / 60000) +" : "+ ((song.duration_ms % 60000) / 1000).toFixed(0) + " min"} variant="outlined" />
-                    {(song.explicit) ? (<Chip label={"Explicit"} variant="outlined" />) : (null)}
-                    </HStack>
 
-                    <Chip label="Artists" color="primary"/>
-                    <HStack mt={2}>
-                      {song.artists.map((artist: string, i:number) => (
-                        <Chip key={i} label={artist} variant="outlined"/>
-                      ))}
-                    </HStack>
-                
-                    <VStack mt={2} spacing={2}>
-                    <Text>Rate this song:</Text>
-                    <Rating
-                        showRating
-                        type="song.rating"
-                        onStartRating={(newValue: number) => {rateSong({variables: {id: song._id, rating: newValue}})}}/>
-                    </VStack>
-                    </View>
-                </DataTable.Cell>
-              </DataTable.Row>
+            <CollapseBody>
+              <View style={songStyles.wrap}>
+                <Chip style={songStyles.spacerStyle} mode="outlined" >Info</Chip>
+                <Chip style={songStyles.spacerStyle} >{"Danceability: "+ (song.danceability * 100).toFixed()+"%"}</Chip>
+                <Chip style={songStyles.spacerStyle} > {Math.floor(song.duration_ms / 60000) +" : "+ ((song.duration_ms % 60000) / 1000).toFixed(0) + " min"}</Chip>
+                  {(song.explicit) ? (<Chip style={songStyles.spacerStyle}>{"Explicit"}</Chip> ) : (null)}
+                <Chip style={songStyles.spacerStyle} >{"Popularity: "+ song.popularity + " / 100"}</Chip>
+              </View>
+              <View style={songStyles.wrap}>
+                <Chip style={songStyles.spacerStyle} mode="outlined" >Artists</Chip>
+                  {song.artists.map((artist: string, i:number) => (
+                    <Chip style={songStyles.spacerStyle}>{artist}</Chip> 
+                  ))}
+              </View>
+              <View style={songStyles.rating}>
+                <Text style={{alignSelf: "center"}}>How would you rate this song?</Text>
+                  <View style={songStyles.spacerStyle}/>
+                    <AirbnbRating 
+                      reviewSize={25}
+                      size={30}
+                      showRating={true}
+                      defaultRating={song.rating}
+                      onFinishRating={(newValue: number) => {rateSong({ variables: { id: song._id, rating: newValue } });}}
+                    />
+                  </View>
             </CollapseBody>
-        </Collapse>
-        </>
-        )))}
-      </DataTable>
-    </DataTable>
-  </View>
-  )
-}
+          </Collapse>
+          )))}
+        </DataTable>
+    </View>
+    );
+  }
+
+  const songStyles = StyleSheet.create({
+    nameCellStyle: {
+      padding: 5,
+      flex: 0.55,
+    },
+    artistCellStyle: {
+      padding: 5,
+      flex: 0.4,
+    },
+    yearCellStyle: {
+      padding: 5,
+      flex: 0.15,
+    },
+    wrap: {
+      flexDirection: "row",
+      flexWrap: "wrap",
+    },
+    spacerStyle: {
+      margin: 4,
+    },
+    rating: {
+      marginTop: 5, 
+      marginBottom: 15
+    }
+  });
