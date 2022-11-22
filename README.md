@@ -20,7 +20,7 @@ Gå inn i nativeClient-mappa
 #### `npx expo start `
 Da kan bruker velge om de vil kjøre appen på android `(a)` /iOS `(i)`, virtuell enhet eller i web `(w)`. For å kjøre prosjektet på en enhet, må bruker ha en virtuell enhet åpen eller en mobil tilkoblet til PC-en. En annen måte å teste applikasjonen er å scanne QR-koden som kommer opp etter kjørt kommando. Da må man først installere Expo Go på mobilen.  
 
-Du finner så serveren på [http://localhost:19000](http://localhost:19000)
+Du finner så serveren for web på [http://localhost:19006](http://localhost:19006)
 ___
 ## React Native Paper
 I prosjekt 3 brukte vi Material UI komponenter til styling og responsive web design, disse måtte byttes ut til prosjekt 4 da MUI ikke er kompatibelt med React Native. Vi benyttet oss stort sett av react-native-paper biblioteket, som hadde mange ekvivalente komponenter til de MUI komponentene vi brukte i forrige prosjekt. Paper er et bibliotek med komponenter for React Native, og er i henhold til Googles retningslinjer for materialdesign.  
