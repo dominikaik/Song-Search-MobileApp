@@ -87,9 +87,8 @@ export function SongList() {
                         minValue={0}
                         type="custom"
                         ratingColor={theme.colors.secondary} 
-                        tintColor={theme.colors.primary}
                         imageSize={35}
-                        showRating={true}
+                       //showRating={true}
                         ratingCount={5}
                         onFinishRating={(newValue: number) => {rateSong({ variables: { id: song._id, rating: newValue } });}}
                         />
