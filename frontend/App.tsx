@@ -1,5 +1,5 @@
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import {AppRegistry, StatusBar} from 'react-native';
+import {AppRegistry, ScrollView, StatusBar} from 'react-native';
 import FrontPage from './components/FrontPage';
 import {Appbar, MD3DarkTheme, Provider, MD3LightTheme} from "react-native-paper";
 import { useState } from 'react';
@@ -69,7 +69,9 @@ export default function App() {
                 onPress={() => setLightmode(!lightMode)}
             />
             </Appbar.Header>
+            <ScrollView>
             <FrontPage/>
+            </ScrollView>
         </Provider>
       </ApolloProvider>
   );
