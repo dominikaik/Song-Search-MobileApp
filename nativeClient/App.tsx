@@ -58,7 +58,7 @@ export default function App() {
         <Provider theme={lightMode ? lightTheme : darkTheme}>
           <StatusBar
               backgroundColor={
-                lightMode ? lightTheme.colors.surface : MD3DarkTheme.colors.primary
+                lightMode ? lightTheme.colors.surface : darkTheme.colors.primary
               }
               barStyle={"dark-content"}
             />
