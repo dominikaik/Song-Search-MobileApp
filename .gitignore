@@ -1,14 +1,14 @@
 # dependencies
-/frontend/node_modules
+/nativeClient/node_modules
 /backend/node_modules
-/frontend/.pnp
+/nativeClient/.pnp
 .pnp.js
 
 # testing
-/frontend/coverage
+/nativeClient/coverage
 
 # production
-/frontend/build
+/nativeClient/build
 
 # misc
 .DS_Store
