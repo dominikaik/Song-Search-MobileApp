@@ -1,30 +1,30 @@
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import {AppRegistry, StatusBar} from 'react-native';
 import FrontPage from './components/FrontPage';
-import {Appbar, MD3DarkTheme, Provider, MD3LightTheme, ThemeProvider} from "react-native-paper";
+import {Appbar, MD3DarkTheme, Provider, MD3LightTheme} from "react-native-paper";
 import { useState } from 'react';
 
 export const lightTheme = {
-  ...MD3LightTheme, // or MD3DarkTheme
+  ...MD3LightTheme, 
   roundness: 2,
   colors: {
     ...MD3LightTheme.colors,
-    primary: '#85aca2', //button
-    surface: '#85aca2', //header color
-    secondaryContainer: '#e4e8e2', //chips colord
-    surfaceVariant: '#e4e8e2', // searchbar
-    onPrimary: 'black', // text color on button
-    onSecondaryContainer: '#2F3E46',// text on chips
-    onSurface: 'black', // alt av teksten
-    onSurfaceVariant: 'black', // topic chips/ search text color and icon theme color filed chips
-    outline: '#85aca2',//outline color on otline elements buttons chips
+    primary: '#85aca2', 
+    surface: '#85aca2', 
+    secondaryContainer: '#e4e8e2', 
+    surfaceVariant: '#e4e8e2', 
+    onPrimary: 'black', 
+    onSecondaryContainer: '#2F3E46',
+    onSurface: 'black', 
+    onSurfaceVariant: 'black', 
+    outline: '#85aca2',
     elevation: {
       level0: 'transparent',
-      level1: 'white', // palette.primary40, alpha 0.05
-      level2: 'rgb(0,0,0)', // palette.primary40, alpha 0.08
-      level3: 'rgb(0,0,0)', // palette.primary40, alpha 0.11
-      level4: 'rgb(0,0,0)', // palette.primary40, alpha 0.12
-      level5: 'rgb(0,0,0)', // palette.primary40, alpha 0.14
+      level1: 'white', 
+      level2: 'rgb(0,0,0)', 
+      level3: 'rgb(0,0,0)', 
+      level4: 'rgb(0,0,0)',
+      level5: 'rgb(0,0,0)',
     }
   },
 };
@@ -34,15 +34,15 @@ export const darkTheme = {
   roundness: 2,
   colors: {
     ...MD3DarkTheme.colors,
-    primary: '#628392', //button
-    surface: '#394c55', //header color
-    secondaryContainer: '#4f6875', //chips colord
-    surfaceVariant: '#2F3E46', // searchbar
-    onPrimary: 'white', // text color on button
-    onSecondaryContainer: '#e4e8e2',// text on chips
-    onSurface: 'white', // alt av teksten
-    onSurfaceVariant: 'white', // topic chips/ search text color and icon theme color filed chips
-    outline: '#2F3E46',//outline color on otline elements buttons chips
+    primary: '#628392', 
+    surface: '#394c55', 
+    secondaryContainer: '#4f6875', 
+    surfaceVariant: '#2F3E46',
+    onPrimary: 'white', 
+    onSecondaryContainer: '#e4e8e2',
+    onSurface: 'white', 
+    onSurfaceVariant: 'white', 
+    outline: '#708f9f', 
   },
 };
 

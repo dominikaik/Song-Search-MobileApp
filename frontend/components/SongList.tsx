@@ -1,20 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { GET_SONGS } from "../GraphQL/queries";
 import { RATE_SONG } from "../GraphQL/mutations";
 import { getSongsInputs, songsDataType } from "../types/songData";
-import { openSongTab, songCurrentPage, songQueryVars, songTotalPages } from '../GraphQL/cache';
+import { songCurrentPage, songQueryVars, songTotalPages } from '../GraphQL/cache';
 import { View, StyleSheet } from "react-native";
 import { DataTable, Text, Chip} from 'react-native-paper';
 import { Collapse, CollapseHeader, CollapseBody} from 'accordion-collapse-react-native';
-import { VStack, HStack } from "@react-native-material/core"; 
-import { Rating } from "react-native-ratings"; 
-import {lightTheme, darkTheme} from '../App'
+import { AirbnbRating } from "react-native-ratings"; 
 
 export function SongList() {
-    const [lightMode, setLightmode] = useState(false);
     const songVars = useReactiveVar(songQueryVars);
-    const open = useReactiveVar(openSongTab);
 
     // Prepare mutation and query, and do the initial fetch.
     const { loading, error, data } = useQuery<songsDataType, getSongsInputs>(GET_SONGS, {
@@ -55,33 +51,26 @@ export function SongList() {
               <View style={songStyles.wrap}>
                 <Chip style={songStyles.spacerStyle} mode="outlined" >Info</Chip>
                 <Chip style={songStyles.spacerStyle} >{"Danceability: "+ (song.danceability * 100).toFixed()+"%"}</Chip>
-                <Chip style={songStyles.spacerStyle} >{"Popularity: "+ song.popularity + " / 100"}</Chip>
                 <Chip style={songStyles.spacerStyle} > {Math.floor(song.duration_ms / 60000) +" : "+ ((song.duration_ms % 60000) / 1000).toFixed(0) + " min"}</Chip>
                   {(song.explicit) ? (<Chip style={songStyles.spacerStyle}>{"Explicit"}</Chip> ) : (null)}
+                <Chip style={songStyles.spacerStyle} >{"Popularity: "+ song.popularity + " / 100"}</Chip>
               </View>
               <View style={songStyles.wrap}>
                 <Chip style={songStyles.spacerStyle} mode="outlined" >Artists</Chip>
                   {song.artists.map((artist: string, i:number) => (
-                    <Chip style={songStyles.spacerStyle}>{artist}</Chip> /*key={i}*/
+                    <Chip style={songStyles.spacerStyle}>{artist}</Chip> 
                   ))}
               </View>
               <View style={songStyles.rating}>
-                <Text>Rate this song:</Text>
+                <Text style={{alignSelf: "center"}}>How would you rate this song?</Text>
                   <View style={songStyles.spacerStyle}/>
-                  <View style={songStyles.wrap}>
-                  {/* <Rating 
-                        style={{backgroundColor: "transparent", padding: 5}}
-                        key={"rating"}
-                        startingValue={song.rating}
-                        minValue={0}
-                        tintColor={"transparent"}
-                        type="custom"
-                        ratingColor={"gold"} 
-                        imageSize={35} 
-                        ratingCount={5} 
-                        onFinishRating={(newValue: number) => {rateSong({ variables: { id: song._id, rating: newValue } });}}
-                        /> */}
-                  </View>
+                    <AirbnbRating 
+                      reviewSize={25}
+                      size={30}
+                      showRating={true}
+                      defaultRating={song.rating}
+                      onFinishRating={(newValue: number) => {rateSong({ variables: { id: song._id, rating: newValue } });}}
+                    />
                   </View>
             </CollapseBody>
           </Collapse>
@@ -112,10 +101,7 @@ export function SongList() {
       margin: 4,
     },
     rating: {
-      margin: 5,
-    },
-    reate: {
-      borderRadius: 5,
-      backgroundColor: "red"
+      marginTop: 5, 
+      marginBottom: 15
     }
   });
