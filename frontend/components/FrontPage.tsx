@@ -78,8 +78,6 @@ function FrontPage() {
             Page {`${page} of ${totalPages}`} 
           </Chip>
           </View>
-        <View style={styles.pagestyle}>
-        </View>
        </DataTable>
         </SafeAreaView>
       </Surface>
