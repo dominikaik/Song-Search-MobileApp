@@ -35,4 +35,4 @@ Vi har stort sett gjenbrukt alt av koden fra prosjekt 3, og det var bare noen f�
 Applikasjon ble testet på Android Studio virtuell enhet, XCode iOS virtuell enhet og ved å inspisere visning i nettleser. Mot slutten av utviklingen ble applikasjon også testet på en faktisk mobil, både android og iOS. Alt av funksjonalitet virket som forventet. 
 
 ## Fra prosjekt 3 
-Fra prosjekt 3 har vi tatt med oss Apollo Client for å feche data fra GraphQL. 
+Fra prosjekt 3 har vi tatt med oss Apollo Client for å feche data med GraphQL. Det blir brukt UseMutation- og UseQuery hooks for å hente ut dataen. Apollo Client håndterer også state management. 
