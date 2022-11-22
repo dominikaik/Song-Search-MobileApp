@@ -1,4 +1,4 @@
-import {Surface, DataTable,  Button, Menu, Divider, TextInput, Text } from "react-native-paper";
+import {Surface, DataTable,  Button, Menu, Divider, TextInput, Chip } from "react-native-paper";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, StyleSheet, View } from "react-native";
 import { SongList } from "./SongList";
@@ -73,11 +73,11 @@ function FrontPage() {
             showFastPaginationControls
             style={{justifyContent: "center"}}
           />
-        <View style={styles.pagestyle}>
-    <Text>
-      Page {`${page} of ${totalPages}`} 
-    </Text>
-        </View>
+          <View style={styles.chipstyle}>
+          <Chip textStyle={{textAlign: "center"}}>
+            Page {`${page} of ${totalPages}`} 
+          </Chip>
+          </View>
        </DataTable>
         </SafeAreaView>
       </Surface>
@@ -111,6 +111,10 @@ function FrontPage() {
       alignSelf: "center",  
       marginBottom: 1, 
       fontSize: 13
+    }, 
+    chipstyle: {
+      flexDirection: "row",
+      justifyContent: "center"
     }
   });
 
