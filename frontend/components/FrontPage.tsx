@@ -101,7 +101,6 @@ function FrontPage() {
       justifyContent: "center"
     },
     button: {
-      backgroundColor: "#52796F", 
       borderRadius: 5
     },
      wrapSpacerStyle: {
