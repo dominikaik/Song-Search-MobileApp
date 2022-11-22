@@ -110,7 +110,6 @@ function FrontPage() {
       justifyContent: "center",
       alignSelf: "center",  
       marginBottom: 1, 
-      fontFamily: "Arial", 
       fontSize: 13
     }
   });

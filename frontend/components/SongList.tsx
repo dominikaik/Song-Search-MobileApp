@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { GET_SONGS } from "../GraphQL/queries";
 import { RATE_SONG } from "../GraphQL/mutations";
@@ -9,10 +9,10 @@ import { DataTable, Text, Chip} from 'react-native-paper';
 import { Collapse, CollapseHeader, CollapseBody} from 'accordion-collapse-react-native';
 import { VStack, HStack } from "@react-native-material/core"; 
 import { Rating } from "react-native-ratings"; 
-import { theme } from "../App"; 
+import {lightTheme, darkTheme} from '../App'
 
 export function SongList() {
-
+    const [lightMode, setLightmode] = useState(false);
     const songVars = useReactiveVar(songQueryVars);
     const open = useReactiveVar(openSongTab);
 
@@ -65,21 +65,24 @@ export function SongList() {
                     <Chip style={songStyles.spacerStyle}>{artist}</Chip> /*key={i}*/
                   ))}
               </View>
-              <View style={songStyles.wrap}>
+              <View style={songStyles.rating}>
                 <Text>Rate this song:</Text>
                   <View style={songStyles.spacerStyle}/>
-                  <Rating
-                        key={song.rating}
+                  <View style={songStyles.wrap}>
+                  {/* <Rating 
+                        style={{backgroundColor: "transparent", padding: 5}}
+                        key={"rating"}
                         startingValue={song.rating}
                         minValue={0}
+                        tintColor={"transparent"}
                         type="custom"
-                        ratingColor={theme.colors.secondary} 
-                        imageSize={35}
-                       //showRating={true}
-                        ratingCount={5}
+                        ratingColor={"gold"} 
+                        imageSize={35} 
+                        ratingCount={5} 
                         onFinishRating={(newValue: number) => {rateSong({ variables: { id: song._id, rating: newValue } });}}
-                        />
-              </View>
+                        /> */}
+                  </View>
+                  </View>
             </CollapseBody>
           </Collapse>
           )))}
@@ -108,4 +111,11 @@ export function SongList() {
     spacerStyle: {
       margin: 4,
     },
+    rating: {
+      margin: 5,
+    },
+    reate: {
+      borderRadius: 5,
+      backgroundColor: "red"
+    }
   });
